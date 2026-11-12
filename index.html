@@ -41,7 +41,14 @@ iframe{width:100%;height:520px;border:0;border-radius:8px}video,audio{width:100%
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 // ====== 1) CONFIGURACIÓN DE FIREBASE (proyecto aula-de-circuitos) ======
-const firebaseConfig={apiKey:"AIzaSyAdPMMv9Mxngu3eByKpvC6k6suhZmNnbak",authDomain:"aula-de-circuitos.firebaseapp.com",projectId:"aula-de-circuitos",storageBucket:"aula-de-circuitos.firebasestorage.app",messagingSenderId:"391620536600",appId:"1:391620536600:web:248fffd5471fdf51f3566d",measurementId:"G-KBLPESLLH1"};
+const firebaseConfig={
+  apiKey: "AIzaSyAdPMMv9Mxngu3eByKpvC6k6suhZmNnbak",
+  authDomain: "aula-de-circuitos.firebaseapp.com",
+  projectId: "aula-de-circuitos",
+  storageBucket: "aula-de-circuitos.firebasestorage.app",
+  messagingSenderId: "391620536600",
+  appId: "1:391620536600:web:248fffd5471fdf51f3566d",
+  measurementId: "G-KBLPESLLH1"};
 // ===================================================================================================
 const ADMIN_EMAIL="santiagoduran15.24@gmail.com",ADMIN_PASS="San103477"; // ⚠ ver README: cambia la clave tras el primer ingreso
 firebase.initializeApp(firebaseConfig);
