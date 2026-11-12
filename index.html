@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aula de circuitos</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b2a6f'/%3E%3Cpath d='M37 5 13 37h16l-4 22 26-34H34z' fill='%23f5a800'/%3E%3C/svg%3E">
+<style>
+:root{--az:#0b2a6f;--az2:#1747b8;--am:#f5a800;--bg:#eef2fa;--tx:#1a2238}
+*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--tx)}
+header{background:var(--az);color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 16px;position:sticky;top:0;z-index:5}
+header h1{font-size:20px;margin:0 12px 0 0}header h1 span{color:var(--am)}
+nav{display:flex;flex-wrap:wrap;gap:4px;flex:1}nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;font-size:14px;cursor:pointer}nav a:hover,nav a.on{background:var(--az2)}
+main{max-width:1100px;margin:auto;padding:16px}img.ban{width:100%;border-radius:10px;display:block;margin-bottom:12px}
+.card{background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px #0002;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+button,.btn{background:var(--az2);color:#fff;border:0;border-radius:6px;padding:8px 14px;cursor:pointer;font-size:14px}button.am{background:var(--am);color:#000}button.gr{background:#667}button.rd{background:#c0392b}
+input,textarea,select{width:100%;padding:8px;border:1px solid #aab;border-radius:6px;margin:4px 0 10px;font:inherit}
+.bar{background:#d5dcec;border-radius:8px;height:14px;overflow:hidden}.bar i{display:block;height:100%;background:var(--am)}
+small,.mut{color:#667}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.tag{background:var(--am);color:#000;border-radius:10px;padding:2px 8px;font-size:12px}
+iframe{width:100%;height:520px;border:0;border-radius:8px}video,audio{width:100%}#msg{position:fixed;bottom:12px;right:12px;background:#000c;color:#fff;padding:10px 16px;border-radius:8px;display:none;z-index:9}
+
+.lg{display:grid;grid-template-columns:1.1fr 1fr;min-height:560px;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px #0b2a6f44;background:#fff;margin-top:10px}
+.lg-l{background:radial-gradient(circle at 20% 15%,#1747b8,#0b2a6f 60%,#06173f);color:#fff;padding:40px 36px;position:relative;display:flex;flex-direction:column;justify-content:center;gap:18px}
+.lg-l:before{content:"";position:absolute;inset:0;opacity:.18;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:34px 34px;-webkit-mask-image:linear-gradient(135deg,#000,transparent 70%);mask-image:linear-gradient(135deg,#000,transparent 70%)}
+.lg-l>*{position:relative}.lg-l .bolt{font-size:54px;color:var(--am);filter:drop-shadow(0 0 14px #f5a80099)}
+.lg-l h2{font-size:34px;margin:0;line-height:1.1}.lg-l h2 span{color:var(--am)}.lg-l p{margin:0;color:#d6e2ff;font-size:16px}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}.feat div{background:#ffffff14;border:1px solid #ffffff2e;border-radius:10px;padding:10px 12px;font-size:14px}.feat b{display:block;color:var(--am)}
+.lg-r{padding:40px 38px;display:flex;flex-direction:column;justify-content:center}
+.tabs{display:flex;background:#e8edf8;border-radius:10px;padding:4px;margin-bottom:22px}.tabs a{flex:1;text-align:center;padding:9px;border-radius:8px;cursor:pointer;font-weight:600;color:#556}.tabs a.on{background:#fff;color:var(--az);box-shadow:0 1px 4px #0002}
+.lg-r h3{margin:0 0 4px;font-size:24px;color:var(--az)}.lg-r .sub{color:#667;margin:0 0 18px}
+.fld{position:relative;margin-bottom:14px}.fld span.ic{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px}.fld input{margin:0;padding:12px 40px 12px 40px;border:1.5px solid #c9d2e8;border-radius:10px}.fld input:focus{outline:none;border-color:var(--az2);box-shadow:0 0 0 3px #1747b822}
+.fld .eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;color:#667;padding:4px;font-size:16px}
+.big{width:100%;padding:13px;font-size:16px;font-weight:600;background:linear-gradient(90deg,var(--az2),var(--az));border-radius:10px;margin-top:6px}.big:hover{filter:brightness(1.15)}
+.lg-r .note{font-size:12.5px;color:#778;margin-top:16px;text-align:center}
+.av{border-radius:50%;object-fit:cover;display:inline-flex;align-items:center;justify-content:center;background:var(--am);color:#000;font-weight:700;flex:none;vertical-align:middle}
+.mods{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(440px,100%),1fr));gap:14px}.mod{cursor:pointer;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px #0003;background:#fff;transition:.15s}.mod:hover{transform:translateY(-3px)}.mod img{width:100%;display:block}.mod h3{padding:24px;margin:0}.stu{padding:34px;font-weight:700;color:var(--az);text-align:center}
+.qb{border-left:5px solid var(--az2)}.qb select{background:#fff}
+@media(max-width:760px){.lg{grid-template-columns:1fr}.lg-l{padding:26px}.lg-l h2{font-size:26px}.feat{display:none}}
+
+</style></head><body>
+<header><h1>⚡ Aula <span>de circuitos</span></h1><nav id="nav"></nav><div id="user"></div></header>
+<main id="app"></main><div id="msg"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+// ====== 1) CONFIGURACIÓN DE FIREBASE (proyecto aula-de-circuitos) ======
+const firebaseConfig={apiKey:"AIzaSyAdPMMv9Mxngu3eByKpvC6k6suhZmNnbak",authDomain:"aula-de-circuitos.firebaseapp.com",projectId:"aula-de-circuitos",storageBucket:"aula-de-circuitos.firebasestorage.app",messagingSenderId:"391620536600",appId:"1:391620536600:web:248fffd5471fdf51f3566d",measurementId:"G-KBLPESLLH1"};
+// ===================================================================================================
+const ADMIN_EMAIL="santiagoduran15.24@gmail.com",ADMIN_PASS="San103477"; // ⚠ ver README: cambia la clave tras el primer ingreso
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(),db=firebase.firestore();
+const $=s=>document.querySelector(s),app=$('#app');
+let me=null,courseId=null,unsubs=[],pendingName=null,tmr=null,TD=null,meUnsub=null;
+const av=(u,s=36)=>u&&u.photo?`<img class="av" src="${u.photo}" style="width:${s}px;height:${s}px">`:`<span class="av" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.45)}px">${esc(((u&&u.name)||'?').trim()[0]||'?').toUpperCase()}</span>`;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const msg=t=>{const m=$('#msg');m.textContent=t;m.style.display='block';setTimeout(()=>m.style.display='none',3500)};
+const isT=()=>me&&(me.role==='docente'||me.role==='admin'),isA=()=>me&&me.role==='admin';
+const genCode=()=>'AC-'+Math.random().toString(36).slice(2,7).toUpperCase();
+function listen(q,fn){unsubs.push(q.onSnapshot(fn,e=>msg('Error: '+e.message)))}
+function clean(){unsubs.forEach(u=>u());unsubs=[];clearInterval(tmr)}
+const MAXB=10*1024*1024,fcache={};
+const rd=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=no;r.readAsDataURL(f)});
+async function imgData(file,max=1100){const src=await rd(file),im=new Image();await new Promise((ok,no)=>{im.onload=ok;im.onerror=no;im.src=src});
+ const k=Math.min(1,max/im.width),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+ let q=.85,d=c.toDataURL('image/jpeg',q);while(d.length>350000&&q>.4){q-=.1;d=c.toDataURL('image/jpeg',q)}return d}
+async function upload(file){ // guarda el archivo en Firestore; si pasa de ~0.9 MB lo parte en trozos
+ let data,type=file.type;
+ if(file.type.startsWith('image/')&&file.type!=='image/gif'){data=await imgData(file);type='image/jpeg'}
+ else{if(file.size>MAXB)throw new Error('"'+file.name+'" supera 10 MB. Para videos más grandes usa un enlace de YouTube o Drive.');data=await rd(file)}
+ const ref=db.collection('files').doc(),meta={name:file.name,type,uid:me.uid,created:Date.now()},CH=900000;
+ if(data.length<=CH)await ref.set({...meta,data});
+ else{const n=Math.ceil(data.length/CH);await ref.set({...meta,chunks:n});
+  for(let i=0;i<n;i+=4)await Promise.all([...Array(Math.min(4,n-i)).keys()].map(k=>ref.collection('chunks').doc(String(i+k).padStart(3,'0')).set({d:data.slice((i+k)*CH,(i+k+1)*CH)})))}
+ return{name:file.name,type,fid:ref.id}}
+function embed(u){let m=u.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);if(m)return`<iframe style="height:315px" src="https://www.youtube.com/embed/${m[1]}" allowfullscreen></iframe>`;
+ m=u.match(/drive\.google\.com\/file\/d\/([\w-]+)/);if(m)return`<iframe style="height:360px" src="https://drive.google.com/file/d/${m[1]}/preview" allowfullscreen></iframe>`;
+ return`<a href="${esc(u)}" target="_blank">🔗 ${esc(u)}</a>`}
+function media(f){if(f.type==='link')return embed(f.url);return`<div class="fx" data-fid="${f.fid}" data-type="${esc(f.type)}" data-name="${esc(f.name)}">⏳ ${esc(f.name)}</div>`}
+async function hydrate(){for(const el of document.querySelectorAll('.fx:not(.done)')){el.classList.add('done');const id=el.dataset.fid,t=el.dataset.type,n=el.dataset.name;
+ try{if(!fcache[id]){const d=(await db.collection('files').doc(id).get()).data();let s=d.data;if(d.chunks){const q=await db.collection('files').doc(id).collection('chunks').get();s=q.docs.sort((a,b)=>a.id<b.id?-1:1).map(x=>x.data().d).join('')}fcache[id]=URL.createObjectURL(await (await fetch(s)).blob())}
+ const u=fcache[id];el.innerHTML=t.startsWith('video')?`<video controls src="${u}"></video>`:t.startsWith('audio')?`<audio controls src="${u}"></audio>`:t.startsWith('image')?`<img src="${u}" style="max-width:100%;border-radius:8px">`:t==='application/pdf'?`<iframe src="${u}" style="height:600px"></iframe><br><a href="${u}" download="${n}">⬇ Descargar ${n}</a>`:`<a href="${u}" download="${n}">📎 ${n}</a>`}catch(e){el.textContent='⚠ No se pudo cargar '+n}}}
+new MutationObserver(hydrate).observe(app,{childList:true,subtree:true});
+function bar(p){return`<div class="bar"><i style="width:${p}%"></i></div><small>${p}%</small>`}
+
+// ---------- Sesión ----------
+auth.onAuthStateChanged(async u=>{
+ clean();
+ if(meUnsub){meUnsub();meUnsub=null}if(!u){me=null;renderHeader();return go('login')}
+ const ref=db.collection('users').doc(u.uid);let d=await ref.get();
+ if(!d.exists){const adm=u.email===ADMIN_EMAIL;const pn=pendingName;pendingName=null;await ref.set({name:adm?'Administrador':pn?pn.f+' '+pn.l:(u.displayName||u.email.split('@')[0]),first:pn?pn.f:'',last:pn?pn.l:'',email:u.email,code:genCode(),role:adm?'admin':'estudiante',created:Date.now()});d=await ref.get()}
+ me={uid:u.uid,...d.data()};renderHeader();
+ meUnsub=ref.onSnapshot(s=>{if(s.exists&&me&&s.data().role!==me.role){me={uid:me.uid,...s.data()};renderHeader();go(location.hash.slice(1)||'home')}});
+ if(me.role==='admin')await seedCourse();
+ {let r=location.hash.slice(1);if(!r||r==='login'||r==='register')r='home';go(r)}
+});
+async function login(e){e.preventDefault();const em=$('#le').value.trim(),pw=$('#lp').value;
+ try{await auth.signInWithEmailAndPassword(em,pw)}
+ catch(err){ // crea la cuenta admin por defecto la primera vez
+  if(em===ADMIN_EMAIL&&pw===ADMIN_PASS&&['auth/user-not-found','auth/invalid-credential','auth/invalid-login-credentials'].includes(err.code)){
+   try{await auth.createUserWithEmailAndPassword(em,pw)}catch(e2){msg(e2.message)}}
+  else msg('No se pudo iniciar sesión: '+err.message)}}
+async function register(e){e.preventDefault();
+ try{pendingName={f:$('#rn').value.trim(),l:$('#ra').value.trim()};const c=await auth.createUserWithEmailAndPassword($('#re').value.trim(),$('#rp').value);await c.user.updateProfile({displayName:pendingName.f+' '+pendingName.l})}
+ catch(err){msg(err.message)}}
+function renderHeader(){
+ $('#user').innerHTML=me?`<a onclick="go('profile')" style="cursor:pointer" title="Mi perfil">${av(me,30)}</a> <span class="tag">${me.role}</span> ${esc(me.name)} <button class="am" onclick="auth.signOut()">Cerrar sesión</button>`:'';
+ const items=me?[['home','Inicio'],['course','Curso'],['units','Unidades'],['acts','Actividades'],['tests','Tests'],['forum','Foro'],['info','Información'],['sims','Simuladores'],['profile','Mi perfil']]:[];
+ if(isT())items.push(['students','Integrantes']);if(isA())items.push(['admin','Administrador']);
+ $('#nav').innerHTML=items.map(i=>`<a data-r="${i[0]}" onclick="go('${i[0]}')">${i[1]}</a>`).join('')}
+async function seedCourse(){const s=await db.collection('courses').limit(1).get();if(!s.empty){(await db.collection('courses').get()).docs.filter(d=>!d.data().students).forEach(d=>d.ref.update({students:[]}));return}
+ await db.collection('courses').add({title:'Fundamentos de circuitos eléctricos',code:'EE2026801',desc:'Fundamentos y aplicaciones de la electricidad y la electrónica: conceptos clave, circuitos, dispositivos y sistemas.',banner:'images/Banner_de_curso.png',welcome:'images/Banner.png',students:[],owner:me.uid,created:Date.now()})}
+
+// ---------- Router ----------
+window.go=(r,id)=>{if(!me&&r!=='login'&&r!=='register')r='login';if(me&&(r==='login'||r==='register'))r='home';clean();if(id)courseId=id;location.hash=r;
+ document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.r===r));
+ const v={login:vLogin,register:vReg,home:vHome,course:vCourse,units:vUnits,acts:vActs,tests:vTests,forum:vForum,info:vInfo,sims:vSims,profile:vProfile,students:vStudents,admin:vAdmin,newcourse:vNewCourse}[r]||vHome;v()};
+const needCourse=()=>{if(!courseId){app.innerHTML='<div class="card">Primero elige un curso en <a href="#home" onclick="go(\'home\')">Inicio</a>.</div>';return false}return true};
+const CH=()=>db.collection('courses').doc(courseId);
+const head=(img,alt)=>`<img class="ban" src="images/${img}" alt="${alt}" onerror="this.style.display='none'">`;
+
+// ---------- Vistas ----------
+function authShell(mode){const L=mode==='login';
+ app.innerHTML=`<div class="lg"><div class="lg-l"><div class="bolt">⚡</div><h2>Aula <span>de circuitos</span></h2><p>Aprende electricidad y electrónica con unidades, simuladores, actividades y tests en un solo lugar.</p><div class="feat"><div><b>📘 Unidades</b>Contenido y multimedia</div><div><b>🔬 Simuladores</b>Practica sin riesgo</div><div><b>📝 Tests</b>Evalúa tu avance</div><div><b>💬 Foro</b>Aprende en comunidad</div></div></div>
+ <div class="lg-r"><div class="tabs"><a class="${L?'on':''}" onclick="go('login')">Iniciar sesión</a><a class="${L?'':'on'}" onclick="go('register')">Crear cuenta</a></div>
+ <h3>${L?'¡Bienvenido de nuevo!':'Crea tu cuenta'}</h3><p class="sub">${L?'Ingresa tus datos para continuar con tu curso.':'Únete a la plataforma como estudiante.'}</p>
+ <form onsubmit="${L?'login':'register'}(event)">${L?'':'<div class="fld"><span class="ic">👤</span><input id="rn" placeholder="Nombres" required></div><div class="fld"><span class="ic">👤</span><input id="ra" placeholder="Apellidos" required></div>'}
+ <div class="fld"><span class="ic">✉️</span><input id="${L?'le':'re'}" type="email" placeholder="Correo electrónico" required></div>
+ <div class="fld"><span class="ic">🔒</span><input id="${L?'lp':'rp'}" type="password" placeholder="Contraseña${L?'':' (mín. 6 caracteres)'}" minlength="${L?1:6}" required><button type="button" class="eye" onclick="const i=this.previousElementSibling;i.type=i.type==='password'?'text':'password'">👁</button></div>
+ <button class="big">${L?'Entrar ⚡':'Registrarme ⚡'}</button></form>
+ <p class="note">${L?'¿Aún no tienes cuenta? <a href="#register" onclick="go(\'register\')">Regístrate aquí</a>':'Tu cuenta será de estudiante. Recibirás un código único para que el administrador pueda asignarte rol docente.'}</p></div></div>`}
+function vLogin(){authShell('login')}
+function vReg(){authShell('register')}
+function vHome(){app.innerHTML=`<h2>Mis cursos</h2>${isT()?'<button class="am" onclick="go(\'newcourse\')">+ Crear curso</button>':''}<div class="grid" id="cl"></div>`;
+ listen(homeQ(),async s=>{const ds=s.docs.slice().sort((a,b)=>a.data().created-b.data().created);$('#cl').innerHTML=ds.map(d=>{const c=d.data();return`<div class="card"><img src="${c.banner}" style="width:100%;border-radius:8px"><h3>${esc(c.title)}</h3><small>${esc(c.code)}</small><div class="row" style="margin-top:8px"><button onclick="go('course','${d.id}')">Entrar al curso</button>${isT()?`<button class="rd" onclick="delCourse('${d.id}')">Eliminar</button>`:''}</div></div>`}).join('')||(isT()?'<div class="card">Aún no hay cursos.</div>':'<div class="card">Aún no estás inscrito en ningún curso. Entrega tu código (en Mi perfil) a tu docente para que te agregue.</div>')})}
+function homeQ(){const c=db.collection('courses');if(isA())return c;if(!isT())return c.where('students','array-contains',me.uid);
+ return{onSnapshot(fn,er){let a=[],b=[];const f=()=>{const m={};[...a,...b].forEach(d=>m[d.id]=d);fn({docs:Object.values(m)})};const u1=c.where('owner','==',me.uid).onSnapshot(s=>{a=s.docs;f()},er),u2=c.where('students','array-contains',me.uid).onSnapshot(s=>{b=s.docs;f()},er);return()=>{u1();u2()}}}}
+window.delCourse=async id=>{if(confirm('¿Eliminar el curso?')){await db.collection('courses').doc(id).delete()}};
+function vNewCourse(){if(!isT())return go('home');app.innerHTML=`<div class="card"><h2>Crear curso</h2><form onsubmit="saveCourse(event)"><label>Nombre</label><input id="cn" required><label>Código</label><input id="cc" required><label>Descripción</label><textarea id="cd" rows="3"></textarea><label>Imagen banner del curso</label><input id="cb" type="file" accept="image/*" required><label>Imagen de bienvenida</label><input id="cw" type="file" accept="image/*" required><button>Guardar curso</button> <button type="button" class="gr" onclick="go('home')">Cancelar</button></form></div>`}
+window.saveCourse=async e=>{e.preventDefault();msg('Subiendo…');try{const b=await imgData($('#cb').files[0]),w=await imgData($('#cw').files[0]);
+ await db.collection('courses').add({title:$('#cn').value,code:$('#cc').value,desc:$('#cd').value,banner:b,welcome:w,students:[],owner:me.uid,created:Date.now()});msg('Curso creado');go('home')}catch(x){msg(x.message)}};
+
+function vCourse(){if(!needCourse())return;app.innerHTML='<div id="c"></div>';
+ listen(CH(),d=>{const c=d.data();if(!c)return;$('#c').innerHTML=`<img class="ban" src="${c.banner}"><img class="ban" src="${c.welcome}"><div class="card"><h2>${esc(c.title)}</h2><p>${esc(c.desc)}</p><div id="pg"></div></div>
+ <div class="mods">${[['info','Información general','Informacion_general.png'],['units','Unidades didácticas','Unidades_Didacticas.png'],['acts','Desarrollo de actividades','Desarrollo_de_actividades.png'],['tests','Test evaluativos','Test_evaluativos.png'],['forum','Noticias y foro general','Foro_general.png'],['sims','Simuladores','Simuladores.png']].map(i=>`<div class="mod" onclick="go('${i[0]}')"><img src="images/${i[2]}" alt="${i[1]}" onerror="this.outerHTML='<h3>${i[1]}</h3>'"></div>`).join('')}${isT()?'<div class="mod stu" onclick="go(\'students\')">👥 Integrantes del curso</div>':''}</div>`;progress()})}
+function progress(){listen(CH().collection('units'),us=>{const total=us.size;db.collection('progress').doc(me.uid+'_'+courseId).get().then(p=>{const n=p.exists?(p.data().done||[]).filter(x=>us.docs.some(u=>u.id===x)).length:0;const el=$('#pg');if(el)el.innerHTML='<b>Mi progreso</b>'+bar(total?Math.round(n/total*100):0)})})}
+
+function vUnits(){if(!needCourse())return;app.innerHTML=head('Unidades_Didacticas.png','Unidades didácticas')+`${isT()?`<div class="card"><h3>Nueva unidad</h3><input id="ut" placeholder="Título de la unidad"><textarea id="ud" placeholder="Descripción"></textarea><label>Archivos (máx. 10 MB c/u)</label><input id="uf" type="file" multiple><label>o enlace de video (YouTube / Drive)</label><input id="ulk" placeholder="https://…"><button onclick="addUnit()">Crear unidad / subir archivos</button></div>`:''}<div id="ul"></div>`;
+ let done=[];listen(db.collection('progress').doc(me.uid+'_'+courseId),p=>{done=p.exists?p.data().done||[]:[];draw()});let docs=[];listen(CH().collection('units').orderBy('created'),s=>{docs=s.docs;draw()});
+ function draw(){$('#ul').innerHTML=docs.map(d=>{const u=d.data(),ok=done.includes(d.id);return`<div class="card"><h3>${esc(u.title)} ${ok?'✔':''}</h3><p>${esc(u.desc)}</p>${(u.files||[]).map(f=>`<div>${media(f)}</div>`).join('')}<div class="row" style="margin-top:8px"><button class="${ok?'gr':'am'}" onclick="mark('${d.id}',${ok})">${ok?'Desmarcar':'Marcar como completada'}</button>${isT()?`<button class="rd" onclick="CH().collection('units').doc('${d.id}').delete()">Eliminar</button>`:''}</div></div>`}).join('')||'<div class="card">Sin unidades.</div>'}}
+window.addUnit=async()=>{const t=$('#ut').value;if(!t)return msg('Escribe un título');msg('Subiendo… los archivos grandes pueden tardar');try{const files=[];for(const f of $('#uf').files)files.push(await upload(f));if($('#ulk').value.trim())files.push({type:'link',name:'Enlace',url:$('#ulk').value.trim()});await CH().collection('units').add({title:t,desc:$('#ud').value,files,created:Date.now()});msg('Unidad creada')}catch(e){msg(e.message)}};
+window.mark=async(id,ok)=>{await db.collection('progress').doc(me.uid+'_'+courseId).set({done:ok?firebase.firestore.FieldValue.arrayRemove(id):firebase.firestore.FieldValue.arrayUnion(id)},{merge:true})};
+
+function vActs(){if(!needCourse())return;app.innerHTML=head('Desarrollo_de_actividades.png','Desarrollo de actividades')+`${isT()?`<div class="card"><h3>Crear actividad</h3><input id="at" placeholder="Título"><textarea id="ad" rows="3" placeholder="Descripción"></textarea><label>Fecha límite</label><input id="adt" type="date"><label>Material (máx. 10 MB)</label><input id="af" type="file"><button onclick="addAct()">Publicar actividad</button></div>`:''}<div id="al"></div>`;
+ listen(CH().collection('activities').orderBy('created','desc'),s=>{$('#al').innerHTML=s.docs.map(d=>{const a=d.data();return`<div class="card"><h3>${esc(a.title)}</h3><small>Entrega: ${esc(a.due||'sin fecha')}</small><p>${esc(a.desc)}</p>${a.file?media(a.file):''}<div id="s${d.id}"></div>${isT()?`<button class="rd" onclick="CH().collection('activities').doc('${d.id}').delete()">Eliminar</button>`:''}</div>`}).join('')||'<div class="card">Sin actividades.</div>';s.docs.forEach(d=>subs(d.id))})}
+function subs(aid){const el=$('#s'+aid);if(!el)return;
+ if(isT())listen(db.collection('submissions').where('activity','==',aid),s=>{el.innerHTML='<h4>Entregas ('+s.size+')</h4>'+s.docs.map(x=>{const v=x.data();return`<div class="row"><b>${esc(v.student)}</b> ${media(v.file)} <i>${esc(v.comment||'')}</i> Nota: <input style="width:70px;margin:0" value="${v.grade??''}" onchange="db.collection('submissions').doc('${x.id}').update({grade:this.value})"></div>`}).join('')});
+ else listen(db.collection('submissions').doc(aid+'_'+me.uid),x=>{const v=x.data();el.innerHTML=v?`<p>✔ Entregada: ${media(v.file)} ${v.grade?`<span class="tag">Nota ${esc(v.grade)}</span>`:''}</p>`:`<input type="file" id="f${aid}"><input id="c${aid}" placeholder="Comentario"><button onclick="submitAct('${aid}')">Enviar entrega</button>`})}
+window.addAct=async()=>{if(!$('#at').value)return msg('Escribe un título');msg('Publicando…');try{const f=$('#af').files[0];await CH().collection('activities').add({title:$('#at').value,desc:$('#ad').value,due:$('#adt').value,file:f?await upload(f):null,created:Date.now()});msg('Actividad publicada')}catch(e){msg(e.message)}};
+window.submitAct=async aid=>{const f=$('#f'+aid).files[0];if(!f)return msg('Adjunta un archivo');msg('Enviando…');try{await db.collection('submissions').doc(aid+'_'+me.uid).set({activity:aid,course:courseId,uid:me.uid,student:me.name,comment:$('#c'+aid).value,file:await upload(f),created:Date.now()});msg('Entrega enviada')}catch(e){msg(e.message)}};
+
+function vTests(){if(!needCourse())return;
+ app.innerHTML=head('Test_evaluativos.png','Test evaluativos')+`${isT()?'<div class="card"><button class="am" onclick="newTest()">+ Crear test</button></div><div id="tb"></div>':''}<div id="tv"></div><div id="tl"></div>`;
+ listen(CH().collection('tests').orderBy('created','desc'),s=>{
+  $('#tl').innerHTML=s.docs.map(d=>{const t=d.data();return`<div class="card"><h3>📝 ${esc(t.title)}</h3><p>${esc(t.desc||'')}</p><small>${t.q.length} preguntas · ${t.minutes?t.minutes+' min':'sin límite de tiempo'}</small><div id="r${d.id}" style="margin:8px 0"></div><div class="row">${isT()?`<button onclick="viewResults('${d.id}')">Ver respuestas</button><button class="rd" onclick="delTest('${d.id}')">Eliminar</button>`:`<button id="b${d.id}" onclick="startTest('${d.id}')">Resolver</button>`}</div></div>`}).join('')||'<div class="card">Sin tests.</div>';
+  if(!isT())s.docs.forEach(d=>listen(db.collection('results').doc(d.id+'_'+me.uid),r=>{const el=$('#r'+d.id);if(!el)return;const b=$('#b'+d.id);
+   if(r.exists&&r.data().submitted){el.innerHTML=resTag(r.data());if(b)b.style.display='none'}else el.innerHTML=r.exists?'<span class="tag">En curso…</span>':''}))})}
+function resTag(v){const mt=Object.values(v.manual||{}).reduce((a,b)=>a+(+b||0),0),pend=(v.openIdx||[]).length>Object.keys(v.manual||{}).length;return`<span class="tag" style="font-size:14px">Nota: ${+(v.auto+mt).toFixed(2)}/${v.max}</span>${pend?' <small class="mut">(preguntas abiertas pendientes de calificar)</small>':''}`}
+// --- Crear test (estilo Forms)
+window.newTest=()=>{TD={title:'',desc:'',minutes:0,q:[]};addQ()};
+window.addQ=()=>{TD.q.push({t:'',type:'one',o:['',''],c:[],pts:1});tbR()};
+window.qType=(i,v)=>{const q=TD.q[i];q.type=v;q.c=[];if(v!=='open'&&!q.o.length)q.o=['',''];tbR()};
+window.setC=(i,j,on)=>{const q=TD.q[i];q.c=q.type==='one'?[j]:on?[...new Set([...q.c,j])]:q.c.filter(x=>x!==j)};
+window.rmO=(i,j)=>{const q=TD.q[i];q.o.splice(j,1);q.c=q.c.filter(x=>x!==j).map(x=>x>j?x-1:x);tbR()};
+function tbR(){if(!TD)return;$('#tb').innerHTML=`<div class="card" style="border-top:6px solid var(--az2)"><h3>Nuevo test</h3><input placeholder="Título del test" value="${esc(TD.title)}" oninput="TD.title=this.value"><textarea rows="2" placeholder="Descripción / instrucciones" oninput="TD.desc=this.value">${esc(TD.desc)}</textarea><label>⏱ Límite de tiempo en minutos (0 = sin límite)</label><input type="number" min="0" value="${TD.minutes}" oninput="TD.minutes=+this.value" style="max-width:160px"></div>
+ ${TD.q.map((q,i)=>`<div class="card qb"><div class="row"><b>Pregunta ${i+1}</b><select style="width:auto;margin:0" onchange="qType(${i},this.value)"><option value="one" ${q.type==='one'?'selected':''}>Opción única</option><option value="multi" ${q.type==='multi'?'selected':''}>Varias respuestas (casillas)</option><option value="open" ${q.type==='open'?'selected':''}>Respuesta abierta</option></select><span>Puntos <input type="number" min="0" step="0.5" value="${q.pts}" style="width:80px;margin:0" oninput="TD.q[${i}].pts=+this.value"></span><button class="rd" onclick="TD.q.splice(${i},1);tbR()">Quitar</button></div><input placeholder="Escribe la pregunta" value="${esc(q.t)}" oninput="TD.q[${i}].t=this.value" style="margin-top:8px">
+ ${q.type==='open'?'<small class="mut">El estudiante escribirá su respuesta y tú la calificas después.</small>':q.o.map((o,j)=>`<div class="row"><input type="${q.type==='one'?'radio':'checkbox'}" name="c${i}" ${q.c.includes(j)?'checked':''} onchange="setC(${i},${j},this.checked)" style="width:auto;margin:0" title="Respuesta correcta"><input placeholder="Opción ${j+1}" value="${esc(o)}" oninput="TD.q[${i}].o[${j}]=this.value" style="flex:1;margin:4px 0"><button class="gr" onclick="rmO(${i},${j})">✕</button></div>`).join('')+`<button class="gr" onclick="TD.q[${i}].o.push('');tbR()">+ Opción</button> <small class="mut">Marca la(s) respuesta(s) correcta(s)</small>`}</div>`).join('')}
+ <div class="row" style="margin-bottom:14px"><button class="gr" onclick="addQ()">+ Agregar pregunta</button><button class="am" onclick="saveTest()">Publicar test</button><button class="gr" onclick="TD=null;$('#tb').innerHTML=''">Cancelar</button></div>`}
+window.saveTest=async()=>{const t=TD;if(!t.title.trim())return msg('Escribe el título del test');if(!t.q.length)return msg('Agrega al menos una pregunta');const qs=[];
+ for(const [i,q] of t.q.entries()){if(!q.t.trim())return msg('Falta el texto de la pregunta '+(i+1));
+  if(q.type==='open'){qs.push({t:q.t.trim(),type:'open',pts:q.pts||0});continue}
+  const map={},o=[];q.o.forEach((x,j)=>{if(x.trim()){map[j]=o.length;o.push(x.trim())}});const c=q.c.filter(j=>j in map).map(j=>map[j]);
+  if(o.length<2)return msg('La pregunta '+(i+1)+' necesita 2 o más opciones');if(!c.length)return msg('Marca la respuesta correcta de la pregunta '+(i+1));
+  qs.push({t:q.t.trim(),type:q.type,o,c,pts:q.pts||0})}
+ await CH().collection('tests').add({title:t.title.trim(),desc:t.desc,minutes:t.minutes||0,q:qs,created:Date.now()});TD=null;$('#tb').innerHTML='';msg('Test publicado')};
+window.delTest=async id=>{if(confirm('¿Eliminar el test?'))await CH().collection('tests').doc(id).delete()};
+// --- Resolver test (estilo Forms, con temporizador)
+window.startTest=async id=>{const t=(await CH().collection('tests').doc(id).get()).data(),rr=db.collection('results').doc(id+'_'+me.uid),r=await rr.get();
+ if(r.exists&&r.data().submitted)return msg('Ya enviaste este test');let started;
+ if(r.exists)started=r.data().started;else{if(!confirm('El tiempo empieza a correr al comenzar'+(t.minutes?' ('+t.minutes+' min)':'')+'. ¿Iniciar?'))return;started=Date.now();await rr.set({test:id,course:courseId,uid:me.uid,student:me.name,started,submitted:false})}
+ window._T={id,t};$('#tl').style.display='none';
+ $('#tv').innerHTML=`<div class="card" style="position:sticky;top:56px;z-index:4;border-top:6px solid var(--az2)"><div class="row"><h3 style="margin:0;flex:1">${esc(t.title)}</h3>${t.minutes?'<b id="clk" class="tag" style="font-size:18px"></b>':''}</div><p class="mut" style="margin:6px 0 0">${esc(t.desc||'')}</p></div>
+ <form id="tf" onsubmit="sendTest(event)">${t.q.map((q,i)=>`<div class="card"><b>${i+1}. ${esc(q.t)}</b> <small class="mut">(${q.pts} pts)</small><div style="margin-top:8px">${q.type==='open'?`<textarea name="q${i}" rows="3" placeholder="Tu respuesta"></textarea>`:q.o.map((o,j)=>`<label style="display:block;padding:6px 0"><input type="${q.type==='one'?'radio':'checkbox'}" name="q${i}" value="${j}" style="width:auto;margin:0 8px 0 0">${esc(o)}</label>`).join('')}</div></div>`).join('')}<button class="am">Enviar respuestas</button></form>`;
+ if(t.minutes){const end=started+t.minutes*60000,tick=()=>{const ms=end-Date.now();if(ms<=0){clearInterval(tmr);msg('⏱ Se acabó el tiempo: se envían tus respuestas');sendTest(null,true);return}const c=$('#clk');if(c)c.textContent='⏱ '+Math.floor(ms/60000)+':'+String(Math.floor(ms/1000)%60).padStart(2,'0')};tick();tmr=setInterval(tick,1000)}};
+window.sendTest=async(e,auto)=>{if(e)e.preventDefault();const f=$('#tf');if(!f||f.dataset.sent)return;if(!auto&&!confirm('¿Enviar tus respuestas?'))return;f.dataset.sent=1;clearInterval(tmr);
+ const{id,t}=window._T;let pts=0,max=0;const ans={},openIdx=[];
+ t.q.forEach((q,i)=>{max+=q.pts;if(q.type==='open'){ans[i]=(f.elements['q'+i].value||'').trim();openIdx.push(i)}else{const sel=[...f.querySelectorAll('[name="q'+i+'"]:checked')].map(x=>+x.value);ans[i]=sel;if(sel.length===q.c.length&&q.c.every(c=>sel.includes(c)))pts+=q.pts}});
+ try{await db.collection('results').doc(id+'_'+me.uid).set({test:id,course:courseId,uid:me.uid,student:me.name,submitted:true,answers:ans,auto:pts,max,openIdx,manual:{},created:Date.now()},{merge:true});msg('Respuestas enviadas ✔')}catch(x){msg(x.message);f.dataset.sent='';return}
+ $('#tv').innerHTML='';$('#tl').style.display=''};
+// --- Docente: ver y calificar
+window.viewResults=async id=>{const t=(await CH().collection('tests').doc(id).get()).data();$('#tl').style.display='none';
+ $('#tv').innerHTML=`<div class="card"><button class="gr" onclick="$('#tv').innerHTML='';$('#tl').style.display=''">← Volver</button><h3>${esc(t.title)} — respuestas</h3></div><div id="rs"></div>`;
+ listen(db.collection('results').where('test','==',id),s=>{const ds=s.docs.filter(d=>d.data().submitted);$('#rs').innerHTML=ds.map(d=>{const v=d.data();return`<div class="card"><div class="row"><b style="flex:1">${esc(v.student)}</b>${resTag(v)}<small class="mut">Cerradas: ${v.auto} pts</small><button class="gr" onclick="if(confirm('¿Permitir que ${esc(v.student)} repita el test?'))db.collection('results').doc('${d.id}').delete()">Permitir reintento</button></div>${(v.openIdx||[]).map(i=>`<div style="margin-top:10px"><small>${i+1}. ${esc(t.q[i].t)}</small><p style="background:#f3f6fd;padding:8px;border-radius:6px;margin:4px 0;white-space:pre-wrap">${esc(v.answers[i]||'(sin respuesta)')}</p>Puntos: <input type="number" min="0" max="${t.q[i].pts}" step="0.5" value="${v.manual&&v.manual[i]!=null?v.manual[i]:''}" style="width:90px;margin:0" onchange="setGrade('${d.id}',${i},this.value,${t.q[i].pts})"> / ${t.q[i].pts}</div>`).join('')}</div>`}).join('')||'<div class="card">Nadie ha enviado respuestas todavía.</div>'})};
+window.setGrade=(rid,i,val,max)=>db.collection('results').doc(rid).update({['manual.'+i]:Math.min(Math.max(+val||0,0),max)});
+// --- Estudiantes del curso
+let ALLS=[],ENR=[];
+function drawAll(){const el=$('#sa');if(!el)return;const q=($('#sf').value||'').toLowerCase();el.innerHTML=ALLS.filter(u=>((u.name||'')+(u.email||'')+(u.code||'')).toLowerCase().includes(q)).map(u=>`<div class="row" style="border-bottom:1px solid #e3e8f4;padding:8px 0">${av(u,40)}<b style="flex:1">${esc(u.name)} <span class="tag">${u.role}</span><br><small class="mut">${esc(u.email)} · ${esc(u.code)}</small></b>${ENR.includes(u.id)?`<button class="rd" onclick="rmStu('${u.id}')">Quitar</button>`:`<button class="am" onclick="addStuId('${u.id}')">Agregar</button>`}</div>`).join('')||'<p class="mut">Sin resultados.</p>'}
+window.addStuId=async id=>{await CH().update({students:firebase.firestore.FieldValue.arrayUnion(id)});msg('Estudiante agregado')};
+function vStudents(){if(!needCourse())return;if(!isT())return go('home');
+ app.innerHTML=`<h2>👥 Integrantes del curso</h2><div class="card"><h3>Agregar estudiante o docente</h3><div class="row"><input id="sc" placeholder="Código (AC-XXXXX) o correo del usuario" style="flex:1;margin:0"><button class="am" onclick="addStu()">Agregar</button></div><p class="mut">Cada usuario encuentra su código en <b>Mi perfil</b> al iniciar sesión.</p></div><div class="card"><h3 id="sn">Inscritos</h3><div id="sl"></div></div><div class="card"><h3>Estudiantes y docentes de la plataforma</h3><input id="sf" placeholder="Buscar por nombre, correo o código" oninput="drawAll()"><div id="sa"></div></div>`;listen(db.collection('users').where('role','in',['estudiante','docente']),s=>{ALLS=s.docs.map(d=>({id:d.id,...d.data()}));drawAll()});
+ listen(CH(),async d=>{const ids=(d.data()||{}).students||[];ENR=ids;drawAll();const us=await Promise.all(ids.map(i=>db.collection('users').doc(i).get()));$('#sn').textContent='Inscritos ('+ids.length+')';
+  $('#sl').innerHTML=us.map((u,k)=>{const x=u.data()||{name:'(usuario eliminado)',email:'',code:''};return`<div class="row" style="border-bottom:1px solid #e3e8f4;padding:8px 0">${av(x,40)}<b style="flex:1">${esc(x.name)} <span class="tag">${x.role||''}</span><br><small class="mut">${esc(x.email)} · ${esc(x.code)}</small></b><button class="rd" onclick="rmStu('${ids[k]}')">Quitar</button></div>`}).join('')||'<p class="mut">Aún no hay estudiantes inscritos.</p>'})}
+window.addStu=async()=>{const v=$('#sc').value.trim();if(!v)return;const s=await(v.includes('@')?db.collection('users').where('email','==',v.toLowerCase()):db.collection('users').where('code','==',v.toUpperCase())).get();
+ if(s.empty)return msg('No se encontró ese usuario');const u=s.docs[0];if(u.data().role==='admin')return msg('El administrador ya ve todos los cursos');
+ await CH().update({students:firebase.firestore.FieldValue.arrayUnion(u.id)});$('#sc').value='';msg(u.data().name+' agregado al curso')};
+window.rmStu=async id=>{if(confirm('¿Quitar al estudiante del curso?'))await CH().update({students:firebase.firestore.FieldValue.arrayRemove(id)})};
+function vForum(){if(!needCourse())return;app.innerHTML=head('Foro_general.png','Noticias y foro general')+`${isT()?`<div class="card"><h3>📢 Publicar noticia</h3><input id="nt" placeholder="Noticia"><button class="am" onclick="post('news')">Publicar noticia</button></div>`:''}<div id="nw"></div><div class="card"><h3>💬 Nuevo tema</h3><input id="ft" placeholder="Título"><textarea id="fb" rows="3" placeholder="Mensaje"></textarea><button onclick="post('forum')">Publicar</button></div><div id="fl"></div>`;
+ listen(CH().collection('posts').orderBy('created','desc'),s=>{const ds=s.docs;$('#nw').innerHTML=ds.filter(d=>d.data().kind==='news').map(d=>`<div class="card" style="border-left:5px solid var(--am)">📢 ${esc(d.data().title)} <small>— ${esc(d.data().author)}</small></div>`).join('');
+  $('#fl').innerHTML=ds.filter(d=>d.data().kind==='forum').map(d=>{const p=d.data();return`<div class="card"><h3>${esc(p.title)}</h3><small>${esc(p.author)}</small><p>${esc(p.body)}</p>${(p.replies||[]).map(r=>`<div class="mut" style="margin-left:16px">↳ <b>${esc(r.author)}</b>: ${esc(r.text)}</div>`).join('')}<div class="row"><input id="rp${d.id}" placeholder="Responder…" style="flex:1"><button onclick="reply('${d.id}')">Responder</button></div></div>`}).join('')})}
+window.post=async k=>{const t=k==='news'?$('#nt').value:$('#ft').value;if(!t)return;await CH().collection('posts').add({kind:k,title:t,body:k==='forum'?$('#fb').value:'',author:me.name,uid:me.uid,created:Date.now()});msg('Publicado')};
+window.reply=async id=>{const el=$('#rp'+id);if(!el.value)return;await CH().collection('posts').doc(id).update({replies:firebase.firestore.FieldValue.arrayUnion({author:me.name,text:el.value})})};
+
+function vInfo(){if(!needCourse())return;app.innerHTML=head('Informacion_general.png','Información general')+'<div class="card" id="ic"></div><div class="card" id="sy"></div>';
+ listen(CH(),d=>{const c=d.data();if(!c)return;$('#ic').innerHTML=`<h2>${esc(c.title)}</h2><p><b>Código:</b> ${esc(c.code)}</p><p>${esc(c.desc)}</p>`;const s=c.syllabus;
+  $('#sy').innerHTML='<h3>📄 Syllabus</h3>'+(s?`<p class="mut">Publicado el ${new Date(s.at).toLocaleDateString('es-CO')}${s.by?' por '+esc(s.by):''}</p>${media(s.file)}`:`<p class="mut">${isT()?'Aún no has subido el syllabus de este curso.':'El docente aún no ha subido el syllabus.'}</p>`)
+  +(isT()?`<div style="margin-top:12px"><label>${s?'Reemplazar':'Subir'} syllabus (PDF, Word… máx. 10 MB)</label><input type="file" id="syf" accept=".pdf,.doc,.docx,.ppt,.pptx,image/*"><div class="row"><button class="am" onclick="upSyl()">${s?'Reemplazar syllabus':'Subir syllabus'}</button>${s?'<button class="rd" onclick="delSyl()">Eliminar</button>':''}</div></div>`:'')})}
+window.upSyl=async()=>{const f=$('#syf').files[0];if(!f)return msg('Elige un archivo (máx. 10 MB)');msg('Subiendo syllabus…');try{const file=await upload(f);await CH().update({syllabus:{file,at:Date.now(),by:me.name}});msg('Syllabus publicado: ya lo ven los estudiantes')}catch(e){msg(e.message)}};
+window.delSyl=async()=>{if(confirm('¿Eliminar el syllabus?'))await CH().update({syllabus:firebase.firestore.FieldValue.delete()})};
+function vSims(){const S=[['Constructor de circuitos DC (PhET)','https://phet.colorado.edu/sims/html/circuit-construction-kit-dc/latest/circuit-construction-kit-dc_all.html'],['Ley de Ohm (PhET)','https://phet.colorado.edu/sims/html/ohms-law/latest/ohms-law_all.html'],['Laboratorio de circuitos con CA (PhET)','https://phet.colorado.edu/sims/html/circuit-construction-kit-ac/latest/circuit-construction-kit-ac_all.html']];
+ app.innerHTML=head('Simuladores.png','Simuladores')+`<h2>Simuladores de electricidad y electrónica</h2><div class="row">${S.map((s,i)=>`<button onclick="document.getElementById('sf').src='${s[1]}'">${s[0]}</button>`).join('')}</div><br><div class="card"><iframe id="sf" src="${S[0][1]}" allowfullscreen></iframe></div>`}
+function vProfile(){app.innerHTML=`<div class="card"><h2>Mi perfil</h2><div class="row" style="gap:18px;align-items:center;margin-bottom:12px">${av(me,110)}<div><input type="file" id="pf" accept="image/*" style="display:none" onchange="setPhoto(this.files[0])"><button onclick="$('#pf').click()">📷 ${me.photo?'Cambiar foto':'Subir foto'}</button> ${me.photo?'<button class="gr" onclick="setPhoto(null)">Quitar foto</button>':''}<p class="mut" style="margin:8px 0 0">Tu foto se verá en el encabezado y en las listas de estudiantes.</p></div></div><p><b>Nombre:</b> ${esc(me.name)}</p><p><b>Correo:</b> ${esc(me.email)}</p><p><b>Rol:</b> ${me.role}</p><p><b>Mi código:</b> <span class="tag" style="font-size:16px">${me.code}</span></p><p class="mut">Entrega este código a tu docente para que te agregue a su curso, o al administrador si necesitas rol de docente.</p></div>`}
+async function avatarData(file){const src=await rd(file),im=new Image();await new Promise((ok,no)=>{im.onload=ok;im.onerror=no;im.src=src});const s=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=256;c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,256,256);return c.toDataURL('image/jpeg',.85)}
+window.setPhoto=async f=>{try{const ref=db.collection('users').doc(me.uid);if(f===null){await ref.update({photo:firebase.firestore.FieldValue.delete()});me.photo=''}else{if(!f)return;const p=await avatarData(f);await ref.update({photo:p});me.photo=p}renderHeader();vProfile();msg('Foto actualizada')}catch(e){msg(e.message)}};
+function vAdmin(){if(!isA())return go('home');app.innerHTML=`<div class="card"><h2>Administrar docentes</h2><div class="row"><input id="ac" placeholder="Código del usuario (AC-XXXXX)" style="flex:1"><button onclick="setRole('docente')">Dar rol docente</button></div></div><div class="card"><h3>Usuarios</h3><div id="us"></div></div>`;
+ listen(db.collection('users').orderBy('created'),s=>{$('#us').innerHTML='<table width="100%"><tr><th align=left>Nombre<th align=left>Correo<th>Código<th>Rol<th></tr>'+s.docs.map(d=>{const u=d.data();return`<tr><td>${av(u,28)} ${esc(u.name)}<td>${esc(u.email)}<td align=center>${u.code}<td align=center>${u.role}<td>${u.role==='docente'?`<button class="gr" onclick="db.collection('users').doc('${d.id}').update({role:'estudiante'})">Quitar docente</button>`:''}</tr>`}).join('')+'</table>'})}
+window.setRole=async r=>{const c=$('#ac').value.trim().toUpperCase();const s=await db.collection('users').where('code','==',c).get();if(s.empty)return msg('Código no encontrado');const d=s.docs[0];if(d.data().role==='admin')return msg('Es administrador');await d.ref.update({role:r});msg(d.data().name+' ahora es '+r)};
+</script></body></html>
